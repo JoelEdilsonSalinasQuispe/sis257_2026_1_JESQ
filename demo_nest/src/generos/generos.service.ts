@@ -13,7 +13,8 @@ export class GenerosService {
     let genero = await this.generosRepository.findOneBy({
       descripcion: createGeneroDto.descripcion,
     });
-    if (genero) throw new ConflictException('El género ya existe');
+    if (genero) throw new ConflictException('El genero ya existe');
+
     genero = new Genero();
     Object.assign(genero, createGeneroDto);
     return this.generosRepository.save(genero);
@@ -25,7 +26,7 @@ export class GenerosService {
 
   async findOne(id: number): Promise<Genero> {
     const genero = await this.generosRepository.findOneBy({ id });
-    if (!genero) throw new NotFoundException('El género no existe');
+    if (!genero) throw new NotFoundException('El genero no existe');
     return genero;
   }
 
@@ -37,7 +38,6 @@ export class GenerosService {
 
   async remove(id: number): Promise<Genero> {
     const genero = await this.findOne(id);
-    await this.generosRepository.remove(genero);
-    return genero;
+    return this.generosRepository.softRemove(genero);
   }
 }

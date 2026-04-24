@@ -20,14 +20,14 @@ export class Artista {
   @Column('varchar', { length: 30 })
   nacionalidad: string;
 
-  @Column('varchar', { length: 2000 })
+  @Column('varchar', { length: 1000 })
   fotografia: string;
 
   @CreateDateColumn({ name: 'fecha_creacion' })
   fechaCreacion: Date;
 
   @UpdateDateColumn({ name: 'fecha_modificacion' })
-  fechaModificacion: Date;
+  fechaModicicaion: Date;
 
   @DeleteDateColumn({ name: 'fecha_eliminacion' })
   fechaEliminacion: Date;

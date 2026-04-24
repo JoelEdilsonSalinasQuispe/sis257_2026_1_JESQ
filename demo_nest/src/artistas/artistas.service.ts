@@ -1,13 +1,14 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateArtistaDto } from './dto/create-artista.dto';
 import { UpdateArtistaDto } from './dto/update-artista.dto';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Artista } from './entities/artista.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class ArtistasService {
   constructor(@InjectRepository(Artista) private artistasRepository: Repository<Artista>) {}
+
   async create(createArtistaDto: CreateArtistaDto): Promise<Artista> {
     let artista = await this.artistasRepository.findOneBy({
       nombre: createArtistaDto.nombre.trim(),
@@ -24,7 +25,7 @@ export class ArtistasService {
     return this.artistasRepository.find({ order: { nombre: 'ASC' } });
   }
 
-  async findOne(id: number) {
+  async findOne(id: number): Promise<Artista> {
     const artista = await this.artistasRepository.findOneBy({ id });
     if (!artista) throw new NotFoundException('El artista no existe');
     return artista;

@@ -1,4 +1,5 @@
 import { Artista } from 'src/artistas/entities/artista.entity';
+import { Cancion } from 'src/canciones/entities/cancion.entity';
 import {
   Column,
   CreateDateColumn,
@@ -6,6 +7,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -15,20 +17,20 @@ export class Album {
   @PrimaryGeneratedColumn('identity')
   id: number;
 
-  @Column('integer', { name: 'ide_artista' })
+  @Column('integer', { name: 'id_artista' })
   idArtista: number;
 
   @Column('varchar', { length: 50 })
   nombre: string;
 
   @Column('date', { name: 'fecha_lanzamiento' })
-  fechaLanzamieneto: Date;
+  fechaLanzamiento: Date;
 
   @CreateDateColumn({ name: 'fecha_creacion' })
   fechaCreacion: Date;
 
   @UpdateDateColumn({ name: 'fecha_modificacion' })
-  fechaModificacion: Date;
+  fechaModicicaion: Date;
 
   @DeleteDateColumn({ name: 'fecha_eliminacion' })
   fechaEliminacion: Date;
@@ -36,4 +38,7 @@ export class Album {
   @ManyToOne(() => Artista, artista => artista.albumes)
   @JoinColumn({ name: 'id_artista', referencedColumnName: 'id' })
   artista: Artista;
+
+  @OneToMany(() => Cancion, cancion => cancion.album)
+  canciones: Cancion[];
 }
